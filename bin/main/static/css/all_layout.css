@@ -1,0 +1,25 @@
+/* 전체 레이아웃 설정 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f9fc;
+    color: #333;
+    text-align: center;
+}
+
+/* 헤더 스타일 */
+.header {
+    position: relative;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header h1 {
+    font-size: 2em;
+    margin: 0;
+}

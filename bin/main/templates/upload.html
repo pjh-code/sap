@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>아이템 목록</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/css/all_layout.css">
+		<link rel="stylesheet" href="/css/f_btn.css">
+		<link rel="stylesheet" href="/css/upload.css" />
+		<link rel="stylesheet" href="/css/items_home.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link rel="stylesheet" href="/css/index.css" />
+	</head>
+<body>
+    <header class="top-navbar">
+        <!-- 홈으로 돌아가기 버튼 왼쪽 상단 -->
+		<a href="/" style="color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 20px;">Hujd ERP</a>
+		<h1 style="margin-left: 895px;">엑셀 파일 업로드</h1>
+		<!-- 뒤로 가기 버튼 오른쪽 상단 -->
+        <a href="/items" class="button-link back-button">뒤로 가기</a>
+    </header>
+	
+	<!-- ---------------------사이드바------------------- -->
+			    <div id="sidebar" class="sidebar">
+			        <ul>
+			            <li><a href="/"><i class="fa-solid fa-table"></i><span>대시보드</span></a></li>
+			            <li><a href="/items"><i class="fa-solid fa-inbox"></i><span>아이템 관리</span></a></li>
+			            <li><a href="/stock_management"><i class="fa-solid fa-cart-shopping"></i> <span>재고관리</span></a></li>
+			        </ul>
+			    </div>
+
+			    <!-- 사이드바 토글 버튼 -->
+			    <div class="toggle-btn" onclick="toggleSidebar()" id="toggle-btn">
+			        <span id="toggle-icon">&gt;</span>
+			    </div>
+				
+    <main>
+        <form id="uploadForm" action="/api/items/upload" method="post" enctype="multipart/form-data" class="upload-form">
+            <label for="file">엑셀 파일 선택:</label>
+            <input type="file" id="file" name="file" accept=".xlsx" required>
+            
+            <!-- 버튼들을 그룹화하여 정렬 -->
+            <div class="button-group">
+                <button type="submit" class="upload-button">업로드</button>
+                <a href="/items/list" class="button-link">업로드된 항목 보기</a>
+            </div>
+        </form>
+        
+        <!-- 업로드 상태 메시지를 표시할 영역 -->
+        <div id="message" class="message"></div>
+    </main>
+    <script src="/js/upload.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hujd ERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js CDN for charts -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/index.css" />
+</head>
+<body>
+
+    <!-- 상단 메뉴바 -->
+    <header class="top-navbar">
+        <a href="/" style="color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 20px;">Hujd ERP</a>
+    </header>
+
+    <!-- ---------------------사이드바------------------- -->
+    <div id="sidebar" class="sidebar">
+        <ul>
+            <li><a href="/"><i class="fa-solid fa-table"></i><span>대시보드</span></a></li>
+            <li><a href="/items"><i class="fa-solid fa-inbox"></i><span>아이템 관리</span></a></li>
+            <li><a href="/stock_management"><i class="fa-solid fa-cart-shopping"></i> <span>재고관리</span></a></li>
+        </ul>
+    </div>
+
+    <!-- 사이드바 토글 버튼 -->
+    <div class="toggle-btn" onclick="toggleSidebar()" id="toggle-btn">
+        <span id="toggle-icon">&gt;</span>
+    </div>
+
+	<!-- ----------------------메인 콘텐츠------------------ -->
+	    <div class="dashcontainer">
+	        <div class="container">
+	            <div class="dashboard-header">
+	                <h1>ERP Dashboard</h1>
+	            </div>
+	        
+				<!-- Top Summary Tiles -->
+				<div class="tiles">
+				    <div class="tile">
+				        <h2>새 주문</h2>
+				        <p id="newOrders">Loading...</p>
+				    </div>
+				    <div class="tile">
+				        <h2>총 수익</h2>
+				        <p id="dailyProfit">Loading...</p>
+				    </div>
+				    <div class="tile">
+				        <h2>재고가치</h2>
+				        <p id="inventoryValue">Loading...</p>
+				    </div>
+				    <div class="tile">
+				        <h2>재고개수</h2> 
+				        <p id="inventoryCount">Loading...</p>
+				    </div>
+				</div>
+	        
+	            <!-- Charts Section -->
+				<div class="chart-container">
+				<div class="chart"> <!-- 원형 차트 추가 -->
+					<h3>카테고리별 판매</h3>
+					<canvas id="pieChart"></canvas>
+				</div>
+	                <div class="chart"> <!-- 월별 수익 차트 추가 -->
+	                    <h3>월별 수익</h3>
+	                    <canvas id="monthlyProfitChart"></canvas>
+	                </div>
+	            </div>     
+	        
+	            <!-- Table Section -->
+	            <div class="chart">
+					<!-- 테이블로 데이터 표시 -->
+					<h1>부품별 판매량 1위</h1>
+					<table id="top-selling-items-table">
+					        <thead>
+					            <tr>
+					                <th>부품명</th>
+					                <th>제품명</th>
+					                <th>제조사</th>
+					                <th>매입가격</th>
+					                <th>판매가격</th>
+					                <th>판매량</th>
+					            </tr>
+					        </thead>
+					        <tbody></tbody>
+					    </table>
+	            </div>
+	        </div> 
+	    </div><!-- dashboard -->
+
+    <script>
+        // 1. 아이템 목록을 가져오기
+        fetch('/api/items/list')
+            .then(response => response.json())
+            .then(items => {
+                // 2. 아이템 데이터를 차트에 필요한 형태로 변환
+                const salesData = items.map(item => item.sellPrice); // 판매 가격
+                const purchaseData = items.map(item => item.purchasePrice); // 구매 가격
+                const performanceData = items.map(item => item.performance); // 성능
+                const itemNames = items.map(item => item.name); // 아이템 이름
+
+              
+
+                // 원형 차트
+                fetch('/getPieChartData')
+                    .then(response => response.json())
+                    .then(data => {
+                        const ctxPie = document.getElementById('pieChart').getContext('2d');
+                        const pieChart = new Chart(ctxPie, {
+                            type: 'pie',
+                            data: {
+                                labels: data.labels, // parts 이름이 범례로 표시
+                                datasets: [{
+                                    label: '아이템 성능 비율',
+                                    data: data.data, // 판매 수량 데이터
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.6)',
+                                        'rgba(54, 162, 235, 0.6)',
+                                        'rgba(75, 192, 192, 0.6)',
+                                        'rgba(255, 206, 86, 0.6)',
+                                        'rgba(153, 102, 255, 0.6)',
+                                        'rgba(255, 159, 64, 0.6)',
+                                        'rgba(199, 199, 199, 0.6)',
+                                        'rgba(83, 102, 122, 0.6)',
+                                        'rgba(205, 130, 158, 0.6)',
+                                        'rgba(255, 140, 102, 0.6)',
+                                        'rgba(46, 139, 87, 0.6)',
+                                        'rgba(72, 209, 204, 0.6)',
+                                        'rgba(100, 149, 237, 0.6)',
+                                        'rgba(218, 165, 32, 0.6)',
+                                        'rgba(255, 69, 0, 0.6)',
+                                        'rgba(138, 43, 226, 0.6)',
+                                        'rgba(210, 105, 30, 0.6)',
+                                        'rgba(147, 112, 219, 0.6)'
+                                    ],
+                                    borderColor: 'rgba(255, 255, 255, 1)',
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: { position: 'top' },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(tooltipItem) {
+                                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            })
+            .catch(error => console.error('아이템 목록을 가져오는 중 오류:', error));
+
+			// 월별 수익 차트
+			fetch('/getMonthlyProfitData')
+			    .then(response => response.json())
+			    .then(data => {
+			        // 월별 한글 이름 배열
+			        const monthNames = [
+			            '1월', '2월', '3월', '4월', '5월', '6월',
+			            '7월', '8월', '9월', '10월', '11월', '12월'
+			        ];
+
+			        // 데이터에서 월별 수익과 해당 월의 한글 이름을 매핑
+			        const months = data.map(item => monthNames[item.month - 1]);  // item.month는 1~12 범위
+			        const profits = data.map(item => item.totalProfit);
+
+			        const ctxMonthlyProfit = document.getElementById('monthlyProfitChart').getContext('2d');
+			        const monthlyProfitChart = new Chart(ctxMonthlyProfit, {
+			            type: 'line',
+			            data: {
+			                labels: months,  // '1월', '2월' 형식으로 표시됨
+			                datasets: [{
+			                    label: '월별 수익',
+			                    data: profits,
+			                    fill: false,
+			                    borderColor: 'rgba(75, 192, 192, 1)',
+			                    tension: 0.1
+			                }]
+			            },
+			            options: {
+			                scales: {
+			                    y: { beginAtZero: true }
+			                }
+			            }
+			        });
+			    })
+			    .catch(error => console.error('월별 수익 데이터를 불러오는 중 오류:', error));
+				
+        // 사이드바 토글 함수
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggle-icon');
+            const toggleBtn = document.getElementById('toggle-btn');
+            sidebar.classList.toggle('open');
+
+            if (sidebar.classList.contains('open')) {
+                toggleIcon.innerHTML = '&lt;';
+                toggleBtn.style.left = '182px';
+            } else {
+                toggleIcon.innerHTML = '&gt;';
+                toggleBtn.style.left = '42px';
+            }
+        }
+
+        // 상단 데이터값을 불러옴
+        function formatCurrency(value) {
+            return '₩' + new Intl.NumberFormat('ko-KR', { minimumFractionDigits: 0 }).format(value);
+        }
+
+        // 상위 판매 품목 가져와서 표시하기
+        fetch("/top-selling-items")
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector("#top-selling-items-table tbody");
+                tableBody.innerHTML = '';
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item['부품명']}</td>
+                        <td>${item['제품명']}</td>
+                        <td>${item['제조사']}</td>
+                        <td>${formatCurrency(item['매입가격'])}</td>
+                        <td>${formatCurrency(item['판매가격'])}</td>
+                        <td>${item['판매량']}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error("상위 판매 품목을 불러오는 중 오류:", error));
+
+        // 상단 요약 데이터 가져와서 원화 형식으로 출력하기
+        fetch("/getSummaryTilesData")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('newOrders').textContent = data.newOrders;
+                document.getElementById('dailyProfit').textContent = formatCurrency(data.dailyProfit);
+                document.getElementById('inventoryValue').textContent = formatCurrency(data.inventoryValue);
+                document.getElementById('inventoryCount').textContent = data.inventoryCount;
+            })
+            .catch(error => console.error('요약 데이터를 불러오는 중 오류:', error));
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/index.js"></script>
+
+</body>
+</html>

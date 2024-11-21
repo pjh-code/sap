@@ -1,0 +1,121 @@
+/* 전체 레이아웃 설정 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f9fc;
+    color: #333;
+    text-align: center;
+}
+
+/* 헤더 스타일 */
+.header {
+    position: relative;
+    padding: 20px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+/* 뒤로 가기 버튼 - 오른쪽 상단 */
+.back-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: rgb(192, 192, 192);
+}
+
+/* 업로드 폼 스타일 */
+.upload-form {
+    display: inline-block;
+    padding: 20px 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    width: 350px;
+}
+
+.upload-form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: rgb(0, 0, 0);
+}
+
+.upload-form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* 버튼 그룹 스타일 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* 업로드 버튼 스타일 */
+.upload-button {
+    padding: 10px 20px;
+	width: 100px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+}
+
+/* 업로드된 항목 보기 버튼 스타일 */
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+}
+
+/* 상태 메시지 스타일 */
+.message {
+    margin-top: 20px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+}

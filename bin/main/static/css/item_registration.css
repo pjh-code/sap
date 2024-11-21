@@ -1,0 +1,144 @@
+.registration-section {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registration-section h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+	width: 400px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+}
+
+.id-input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.id-input-wrapper input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.info-icon {
+    margin-left: 8px;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+.info-icon .tooltip {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    left: 700%;
+    top: 350%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: pre-line;
+    z-index: 1;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.info-icon:hover .tooltip {
+    visibility: visible;
+}
+
+.form-group input[type="text"],
+.form-group .custom-select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.register-button {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(128, 128, 128);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.register-button:hover {
+    background-color: rgb(192, 192, 192);
+}
+
+
+.message-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: green;
+}
+
+.clear-button {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(128, 128, 128);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.clear-button:hover {
+    background-color: rgb(192, 192, 192);
+}

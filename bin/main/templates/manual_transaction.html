@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>제품 판매/구매 등록</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/css/manual_transaction.css" />
+		<link rel="stylesheet" href="/css/all_layout.css">
+		<link rel="stylesheet" href="/css/f_btn.css">
+		<link rel="stylesheet" href="/css/items_home.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link rel="stylesheet" href="/css/index.css" />
+	</head>
+	
+	<body>
+
+	    <!-- 상단 메뉴바 -->
+	    <header class="top-navbar">
+	        <a href="/" style="color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 20px;">Hujd ERP</a>
+			<h1 style="margin-left: 895px;">제품 판매/구매 등록</h1>
+			<!-- 뒤로 가기 버튼 오른쪽 상단 -->
+			<a href="/stock_management" class="back-button">뒤로 가기</a>
+	    </header>
+		<!-- ---------------------사이드바------------------- -->
+			    <div id="sidebar" class="sidebar">
+			        <ul>
+			            <li><a href="/"><i class="fa-solid fa-table"></i><span>대시보드</span></a></li>
+			            <li><a href="/items"><i class="fa-solid fa-inbox"></i><span>아이템 관리</span></a></li>
+			            <li><a href="/stock_management"><i class="fa-solid fa-cart-shopping"></i> <span>재고관리</span></a></li>
+			        </ul>
+			    </div>
+
+			    <!-- 사이드바 토글 버튼 -->
+			    <div class="toggle-btn" onclick="toggleSidebar()" id="toggle-btn">
+			        <span id="toggle-icon">&gt;</span>
+			    </div>
+    <main>
+        <form action="/addTransaction" method="post" style="margin-top: 30px;">
+            <label for="itemId">제품 ID:</label>
+            <input type="text" id="itemId" name="itemId" required>
+
+            <label for="transactionDate">거래 날짜:</label>
+            <input type="date" id="transactionDate" name="transactionDate" required>
+
+            <label for="transactionType">거래 유형:</label>
+            <select id="transactionType" name="transactionType" required>
+                <option value="구매">구매</option>
+                <option value="판매">판매</option>
+            </select>
+
+            <label for="quantity">수량:</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <label for="price">가격 (단가):</label>
+            <input type="number" id="price" name="price" required>
+
+            <button type="submit" class="submit-button">등록</button>
+        </form>
+    </main>
+	<script>
+			// 사이드바 토글 함수
+						function toggleSidebar() {
+						    const sidebar = document.getElementById('sidebar');
+						    const toggleIcon = document.getElementById('toggle-icon');
+						    const toggleBtn = document.getElementById('toggle-btn');
+						    sidebar.classList.toggle('open');
+
+						    // 사이드바 상태에 따라 버튼 위치 조정
+						    if (sidebar.classList.contains('open')) {
+						        toggleIcon.innerHTML = '&lt;'; // 닫기 아이콘 '<'
+						        toggleBtn.style.left = '182px'; // 사이드바가 열린 상태에서의 위치
+						    } else {
+						        toggleIcon.innerHTML = '&gt;'; // 열기 아이콘 '>'
+						        toggleBtn.style.left = '42px'; // 닫힌 상태에서의 위치
+						    }
+						}
+
+		// 탭 클릭 이벤트
+					$(document).ready(function(){
+					    $('ul.tabs li').click(function(){
+					        var tab_id = $(this).attr('data-tab');
+
+					        $('ul.tabs li').removeClass('current');
+					        $('.tab-content').removeClass('current');
+
+					        $(this).addClass('current');
+					        $("#" + tab_id).addClass('current');
+					    });
+					});
+		    </script>
+</body>
+</html>

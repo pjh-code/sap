@@ -1,0 +1,61 @@
+# 스프링 설치 경로
+https://spring.io/tools
+
+# 자바 설치 경로
+https://www.oracle.com/java/technologies/downloads/#jdk21-windows
+
+# 스프링부트롬북
+롬복(Lombok) 라이브러리는 소스 코드를 작성할 때 자바 클래스에 애너테이션을 사용하여 자주 쓰는 Getter 메서드, Setter 메서드, 생성자 등을 자동으로 만들어 주는 도구이다.
+https://projectlombok.org/download
+롬복부분 설정방법 : https://wikidocs.net/160444
+이클립스는 이 이후 해당 lombok.jar 파일을 관련 폴더에 넣고 Properties > Java Build Path > Libraries 의 클래스패스에 첨부해줘야함.
+
+# MySQL 설치 경로
+https://dev.mysql.com/downloads/installer/
+# MySQL 설치 가이드
+https://chaeyami.tistory.com/94
+
+# MySQL 계정
+ID : root
+PW : 0000
+
+# DB 생성 및 계정 등록 명령어
+----------------------
+CREATE DATABASE itemlist;
+USE itemlist;
+
+CREATE TABLE item (
+    item_id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(255),
+    description TEXT,
+    price DOUBLE,
+    stock_quantity INT
+);
+
+CREATE TABLE transaction_record (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    transaction_id VARCHAR(255) UNIQUE,
+    item_id VARCHAR(255) NOT NULL,
+    transaction_date DATE,
+    transaction_type VARCHAR(50),
+    purchase_price DOUBLE,
+    sell_price DOUBLE,
+    purchase_quantity INT,
+    sell_quantity INT,
+    total_price DOUBLE,
+    FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE
+);
+
+-- 사용자 및 권한 설정
+CREATE USER 'admin'@'localhost' IDENTIFIED BY '0000';
+GRANT ALL PRIVILEGES ON itemlist.* TO 'admin'@'localhost';
+FLUSH PRIVILEGES;
+
+----------------------
+
+# 깃허브 추적제외 명령어
+git add .gitignore // 파일 생성 명령어
+git commit -m "Add .env to .gitignore"  // .env 파일을 제외에 추가함.
+
+git rm -r --cached . // gitignore에 적혀있으면됨

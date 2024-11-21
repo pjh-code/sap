@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>재고 관리 시스템</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/css/all_layout.css">
+		<link rel="stylesheet" href="/css/f_btn.css">
+		<link rel="stylesheet" href="/css/nav_btn.css">
+		<link rel="stylesheet" href="/css/items_home.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link rel="stylesheet" href="/css/index.css" />
+		<link rel="stylesheet" href="/css/stock_management.css" />
+	</head>
+<body>
+	<!-- 상단 메뉴바 -->
+		    <header class="top-navbar">
+		        <a href="/" style="color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 20px;">Hujd ERP</a>
+				<h1 style="margin-left: 900px;">재고 관리 시스템</h1>
+				<!-- 뒤로 가기 버튼 오른쪽 상단 -->
+				<a href="/" class="button-link back-button">뒤로 가기</a>
+		    </header>
+			
+			<!-- ---------------------사이드바------------------- -->
+				    <div id="sidebar" class="sidebar">
+				        <ul>
+				            <li><a href="/"><i class="fa-solid fa-table"></i><span>대시보드</span></a></li>
+				            <li><a href="/items"><i class="fa-solid fa-inbox"></i><span>아이템 관리</span></a></li>
+				            <li><a href="/stock_management"><i class="fa-solid fa-cart-shopping"></i> <span>재고관리</span></a></li>
+				        </ul>
+				    </div>
+
+				    <!-- 사이드바 토글 버튼 -->
+				    <div class="toggle-btn" onclick="toggleSidebar()" id="toggle-btn">
+				        <span id="toggle-icon">&gt;</span>
+				    </div>
+				<script>
+					// 사이드바 토글 함수
+								function toggleSidebar() {
+								    const sidebar = document.getElementById('sidebar');
+								    const toggleIcon = document.getElementById('toggle-icon');
+								    const toggleBtn = document.getElementById('toggle-btn');
+								    sidebar.classList.toggle('open');
+
+								    // 사이드바 상태에 따라 버튼 위치 조정
+								    if (sidebar.classList.contains('open')) {
+								        toggleIcon.innerHTML = '&lt;'; // 닫기 아이콘 '<'
+								        toggleBtn.style.left = '182px'; // 사이드바가 열린 상태에서의 위치
+								    } else {
+								        toggleIcon.innerHTML = '&gt;'; // 열기 아이콘 '>'
+								        toggleBtn.style.left = '42px'; // 닫힌 상태에서의 위치
+								    }
+								}
+
+				// 탭 클릭 이벤트
+							$(document).ready(function(){
+							    $('ul.tabs li').click(function(){
+							        var tab_id = $(this).attr('data-tab');
+
+							        $('ul.tabs li').removeClass('current');
+							        $('.tab-content').removeClass('current');
+
+							        $(this).addClass('current');
+							        $("#" + tab_id).addClass('current');
+							    });
+							});
+				    </script>
+					
+    <nav class="nav-buttons">
+        <a href="/transaction_list" class="button-link">거래 목록 조회</a>
+        <a href="/manual_transaction" class="button-link">구매 / 판매 등록</a>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>아이템 관리 시스템</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/css/items_home.css">
+		<link rel="stylesheet" href="/css/all_layout.css">
+		<link rel="stylesheet" href="/css/f_btn.css">
+		<link rel="stylesheet" href="/css/nav_btn.css">
+		<link rel="stylesheet" href="/css/item_registration.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link rel="stylesheet" href="/css/index.css" />
+	</head>
+	
+	<body>
+
+	    <!-- 상단 메뉴바 -->
+	    <header class="top-navbar">
+	        <a href="/" style="color: white; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 20px;">Hujd ERP</a>
+			<h1 style="margin-left: 895px;">아이템 관리 시스템</h1>
+			<!-- 뒤로 가기 버튼 오른쪽 상단 -->
+			<a href="/" class="button-link back-button">뒤로 가기</a>
+	    </header>
+
+	    <!-- ---------------------사이드바------------------- -->
+	    <div id="sidebar" class="sidebar">
+	        <ul>
+	            <li><a href="/"><i class="fa-solid fa-table"></i><span>대시보드</span></a></li>
+	            <li><a href="/items"><i class="fa-solid fa-inbox"></i><span>아이템 관리</span></a></li>
+	            <li><a href="/stock_management"><i class="fa-solid fa-cart-shopping"></i> <span>재고관리</span></a></li>
+	        </ul>
+	    </div>
+
+	    <!-- 사이드바 토글 버튼 -->
+	    <div class="toggle-btn" onclick="toggleSidebar()" id="toggle-btn">
+	        <span id="toggle-icon">&gt;</span>
+	    </div>
+    <nav class="nav-buttons">
+        <a href="/upload" class="button-link">엑셀 파일 업로드</a>
+        <a href="/items/list" class="button-link">아이템 목록 보기</a>
+    </nav>
+	<section class="registration-section">
+	        <form id="itemForm" onsubmit="registerItem(event)">
+	            <div class="form-group">
+	                <label>ID:</label>
+	                <div class="id-input-wrapper">
+	                    <input type="text" id="itemId" required placeholder="부품별 ID 포맷을 참고하여 입력하세요">
+	                    <span class="info-icon">ⓘ
+	                        <span class="tooltip">
+	                            C_001 - CPU<br>
+	                            K_001 - COOLER<br>
+	                            M_001 - MAINBOARD<br>
+	                            R_001 - RAM<br>
+	                            G_001 - GPU<br>
+	                            S_001 - SSD<br>
+	                            H_001 - HDD<br>
+	                            CA_001 - CASE<br>
+	                            P_001 - POWER<br>
+	                            O_001 - ODD
+	                        </span>
+	                    </span>
+	                </div>
+	            </div>
+	            
+	            <div class="form-group">
+	                <label>제품명:</label>
+	                <input type="text" id="itemName" required>
+	            </div>
+
+	            <div class="form-group">
+	                <label>부품명:</label>
+	                <select id="itemParts" onchange="toggleCustomInput('parts')" class="custom-select" required>
+	                    <option value="">부품명을 선택하세요</option>
+	                    <option value="custom">직접 입력</option>
+	                </select>
+	                <input type="text" id="customParts" placeholder="부품명을 입력하세요" style="display: none;">
+	            </div>
+
+	            <div class="form-group">
+	                <label>제조사:</label>
+	                <select id="itemMaker" onchange="toggleCustomInput('maker')" class="custom-select" required>
+	                    <option value="">제조사를 선택하세요</option>
+	                    <option value="custom">직접 입력</option>
+	                </select>
+	                <input type="text" id="customMaker" placeholder="제조사를 입력하세요" style="display: none;">
+	            </div>
+
+	            <div class="form-group">
+	                <label>매입가:</label>
+	                <input type="text" id="itemPurchasePrice" required placeholder="매입가를 입력하세요">
+	            </div>
+
+	            <div class="form-group">
+	                <label>판매가:</label>
+	                <input type="text" id="itemSellPrice" required placeholder="판매가를 입력하세요">
+	            </div>
+
+	            <div class="form-group">
+	                <label>성능:</label>
+	                <input type="text" id="itemPerformance" placeholder="성능을 입력하세요">
+	            </div>
+
+	            <button type="submit" class="register-button">아이템 등록</button>
+				<button type="button" onclick="clearForm()" class="clear-button">입력 내용 초기화</button>
+				<p id="message" class="message-text"></p>
+	        </form>
+	    </section>
+
+	    <script src="/js/item_registration.js"></script>
+	<script>
+		// 사이드바 토글 함수
+					function toggleSidebar() {
+					    const sidebar = document.getElementById('sidebar');
+					    const toggleIcon = document.getElementById('toggle-icon');
+					    const toggleBtn = document.getElementById('toggle-btn');
+					    sidebar.classList.toggle('open');
+
+					    // 사이드바 상태에 따라 버튼 위치 조정
+					    if (sidebar.classList.contains('open')) {
+					        toggleIcon.innerHTML = '&lt;'; // 닫기 아이콘 '<'
+					        toggleBtn.style.left = '182px'; // 사이드바가 열린 상태에서의 위치
+					    } else {
+					        toggleIcon.innerHTML = '&gt;'; // 열기 아이콘 '>'
+					        toggleBtn.style.left = '42px'; // 닫힌 상태에서의 위치
+					    }
+					}
+
+	// 탭 클릭 이벤트
+				$(document).ready(function(){
+				    $('ul.tabs li').click(function(){
+				        var tab_id = $(this).attr('data-tab');
+
+				        $('ul.tabs li').removeClass('current');
+				        $('.tab-content').removeClass('current');
+
+				        $(this).addClass('current');
+				        $("#" + tab_id).addClass('current');
+				    });
+				});
+	    </script>
+</body>
+</html>
